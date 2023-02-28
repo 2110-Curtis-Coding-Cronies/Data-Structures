@@ -37,7 +37,7 @@ public:
 		// Loop through the entire list; deletion is only done when there is no head.
 		while (m_head != nullptr) {
 			// Set a temporary node pointer to the next node in the list, starting with the first node after the head.
-			SingleNode<T>* next = m_head->next;
+			DoubleNode<T>* next = m_head->next;
 			// Delete the previous node, which will be the head.
 			delete m_head;
 			// The new head is now the next node.

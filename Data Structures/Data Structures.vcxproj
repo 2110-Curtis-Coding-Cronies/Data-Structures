@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{a18570c2-5f31-42a4-8b47-3933d4874842}</ProjectGuid>
-    <RootNamespace>CSCE2110Exam1Review</RootNamespace>
+    <RootNamespace>DataStructures</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <ProjectName>Data Structures</ProjectName>
   </PropertyGroup>
