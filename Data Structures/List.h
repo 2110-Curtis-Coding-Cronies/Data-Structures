@@ -12,6 +12,11 @@ template <class T, class P>
 class List
 {
 public:
+	// Initializes this list with a length of 0.
+	inline List(void) : m_length(0) {};
+	// Initializes this list with a set length.
+	inline List(size_t initLen) : m_length(initLen) {};
+
 	// Inserts x at the end of this list.
 	virtual void append(T x) = 0;
 
@@ -23,4 +28,19 @@ public:
 
 	// Removes the element at the position indicated by the pointer.
 	virtual void remove(P ptr) = 0;
+
+	// Returns a pointer to the first instance of the specified item in this list, or null if it is not present.
+	virtual P search(T x) const = 0;
+
+	// Returns a pointer to the last instance of the specified item in this list, searching backwards, or null if it is not present.
+	virtual P searchReverse(T x) const = 0;
+
+	// Returns true if this list is empty, false otherwise.
+	virtual inline bool isEmpty(void) const { return m_length == 0; };
+
+	// Returns the current number of elements in this list.
+	inline size_t length(void) const { return m_length; };
+
+protected:
+	size_t m_length;
 };

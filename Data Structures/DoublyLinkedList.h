@@ -61,26 +61,6 @@ public:
 		return m_tail;
 	};
 
-	// Returns the first node which matches the given value, searching forwards.
-	inline DoubleNode<T>* search(T val) const
-	{
-		for (DoubleNode<T>* node = m_head; node != nullptr; node = node->next) {
-			if (node->value == val)
-				return node;
-		}
-		return nullptr;
-	};
-
-	// Returns the last node which matches the given value, searching backwards.
-	inline DoubleNode<T>* searchReverse(T val) const
-	{
-		for (DoubleNode<T>* node = m_tail; node != nullptr; node = node->prev) {
-			if (node->value == val)
-				return node;
-		}
-		return nullptr;
-	};
-
 	// Inserts a new node with the given value after the tail node.
 	inline void append(T val) override
 	{
@@ -94,6 +74,7 @@ public:
 			m_tail->next = new DoubleNode<T>(val, m_tail);
 			m_tail = m_tail->next;
 		}
+		List<T, DoubleNode<T>*>::m_length++;
 	};
 
 	// Inserts a new node with the given value before the head node.
@@ -107,8 +88,10 @@ public:
 			// Insert the new node at the front of the list.
 			m_head = new DoubleNode<T>(val, (DoubleNode<T>*)nullptr, m_head);
 		}
+		List<T, DoubleNode<T>*>::m_length++;
 	};
 
+	// Inserts a new node with value x into this list after the node ptr.
 	inline void insertAfter(DoubleNode<T>* ptr, T x) override
 	{
 		// Special case 1: this list is empty.
@@ -130,8 +113,10 @@ public:
 			// Insert the new node after the specified node.
 			ptr->next = newNode;
 		}
+		List<T, DoubleNode<T>*>::m_length++;
 	};
 
+	// Attempts to remove the node ptr from this list.
 	inline void remove(DoubleNode<T>* ptr) override
 	{
 		// There can be no removal if this list is empty, or if the specified node is null.
@@ -141,22 +126,47 @@ public:
 		if (ptr == m_head) {
 			// Delete the head node and set the new head node to the next node.
 			m_head = m_head->next;
-			delete ptr;
 			m_head->prev = nullptr;
 		}
 		// Special case 2: the specified node is the tail node.
 		else if (ptr == m_tail) {
 			// Delete the tail node and set it to the previous node.
 			m_tail = m_tail->prev;
-			delete ptr;
 			m_tail->next = nullptr;
 		}
 		// Normal case: the specified node is in the middle of this list.
 		else {
 			// Elide the specified node out of the list.
 			ptr->prev->next = ptr->next;
-			delete ptr;
 		}
+		delete ptr;
+		List<T, DoubleNode<T>*>::m_length--;
+	};
+
+	// Returns the first node which matches the given value, searching forwards.
+	inline DoubleNode<T>* search(T val) const override
+	{
+		for (DoubleNode<T>* node = m_head; node != nullptr; node = node->next) {
+			if (node->value == val)
+				return node;
+		}
+		return nullptr;
+	};
+
+	// Returns the last node which matches the given value, searching backwards.
+	inline DoubleNode<T>* searchReverse(T val) const override
+	{
+		for (DoubleNode<T>* node = m_tail; node != nullptr; node = node->prev) {
+			if (node->value == val)
+				return node;
+		}
+		return nullptr;
+	};
+
+	// Returns true if this list is empty, false otherwise.
+	inline bool isEmpty(void) const override
+	{
+		return m_head == nullptr || m_tail == nullptr;
 	};
 
 	inline void printEach(void)
