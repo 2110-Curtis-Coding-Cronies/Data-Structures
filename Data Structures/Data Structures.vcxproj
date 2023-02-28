@@ -131,6 +131,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ArrayList.h" />
     <ClInclude Include="delete.h" />
     <ClInclude Include="DoublyLinkedList.h" />
     <ClInclude Include="LinkedStack.h" />
