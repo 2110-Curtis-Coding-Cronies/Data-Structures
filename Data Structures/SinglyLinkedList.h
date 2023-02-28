@@ -135,9 +135,10 @@ public:
 		size_t counter = 0;
 		SingleNode<T>* node = m_head;
 		while (node != nullptr) {
-			std::cout << counter++ << ": " << node->value << std::endl;
+			std::cout << counter++ << ": " << node->value << '\n';
 			node = node->next;
 		}
+		std::cout << std::endl;
 	}
 
 private:

@@ -1,4 +1,6 @@
 #pragma once
+#include "List.h"
+#include <iostream>
 
 /*
 * Written by Grayson Kippes on 2/26/2023
@@ -28,7 +30,7 @@ struct DoubleNode
 };
 
 template<class T>
-class DoublyLinkedList
+class DoublyLinkedList : public List <T, DoubleNode<T>*>
 {
 public:
 	inline DoublyLinkedList(void) : m_head(nullptr), m_tail(nullptr) {};
@@ -48,19 +50,19 @@ public:
 	};
 
 	// Returns the pointer to the head node.
-	DoubleNode<T>* getHead(void) const
+	inline DoubleNode<T>* getHead(void) const
 	{
 		return m_head;
 	};
 
 	// Returns the pointer to the tail node.
-	DoubleNode<T>* getTail(void) const
+	inline DoubleNode<T>* getTail(void) const
 	{
 		return m_tail;
 	};
 
 	// Returns the first node which matches the given value, searching forwards.
-	DoubleNode<T>* search(T val) const
+	inline DoubleNode<T>* search(T val) const
 	{
 		for (DoubleNode<T>* node = m_head; node != nullptr; node = node->next) {
 			if (node->value == val)
@@ -70,7 +72,7 @@ public:
 	};
 
 	// Returns the last node which matches the given value, searching backwards.
-	DoubleNode<T>* searchReverse(T val) const
+	inline DoubleNode<T>* searchReverse(T val) const
 	{
 		for (DoubleNode<T>* node = m_tail; node != nullptr; node = node->prev) {
 			if (node->value == val)
@@ -80,7 +82,7 @@ public:
 	};
 
 	// Inserts a new node with the given value after the tail node.
-	inline void append(T val)
+	inline void append(T val) override
 	{
 		// Special case: this list is empty.
 		if (m_head == nullptr) {
@@ -95,7 +97,7 @@ public:
 	};
 
 	// Inserts a new node with the given value before the head node.
-	void prepend(T val)
+	inline void prepend(T val) override
 	{
 		if (m_head == nullptr) {
 			m_head = new DoubleNode<T>(val);
@@ -103,8 +105,69 @@ public:
 		}
 		else {
 			// Insert the new node at the front of the list.
-			m_head = new DoubleNode<T>(val, nullptr, m_head);
+			m_head = new DoubleNode<T>(val, (DoubleNode<T>*)nullptr, m_head);
 		}
+	};
+
+	inline void insertAfter(DoubleNode<T>* ptr, T x) override
+	{
+		// Special case 1: this list is empty.
+		if (m_head == nullptr) {
+			// Set both the head and tail pointer to a new node constructed from the given value.
+			m_head = new DoubleNode<T>(x);
+			m_tail = m_head;
+		}
+		// Special case 2: this list is not empty, and the specified node is the tail node.
+		else if (ptr == m_tail) {
+			// Append a new node with the given value to the end of this list.
+			m_tail->next = new DoubleNode<T>(x);
+			m_tail = m_tail->next;
+		}
+		// Normal case: this list is not empty, and the specified node is not the tail node.
+		else {
+			// Create the new node initialized with the given value, with the specified node as the previous node and the specified node's original next node as this node's next node.
+			DoubleNode<T>* newNode = new DoubleNode<T>(x, ptr, ptr->next);
+			// Insert the new node after the specified node.
+			ptr->next = newNode;
+		}
+	};
+
+	inline void remove(DoubleNode<T>* ptr) override
+	{
+		// There can be no removal if this list is empty, or if the specified node is null.
+		if (m_head == nullptr || ptr == nullptr) return;
+
+		// Special case 1: the specified node is the head node.
+		if (ptr == m_head) {
+			// Delete the head node and set the new head node to the next node.
+			m_head = m_head->next;
+			delete ptr;
+			m_head->prev = nullptr;
+		}
+		// Special case 2: the specified node is the tail node.
+		else if (ptr == m_tail) {
+			// Delete the tail node and set it to the previous node.
+			m_tail = m_tail->prev;
+			delete ptr;
+			m_tail->next = nullptr;
+		}
+		// Normal case: the specified node is in the middle of this list.
+		else {
+			// Elide the specified node out of the list.
+			ptr->prev->next = ptr->next;
+			delete ptr;
+		}
+	};
+
+	inline void printEach(void)
+	{
+		size_t counter = 0;
+		DoubleNode<T>* node = m_head;
+		while (node != nullptr) {
+			std::cout << counter++ << ": " << node->value << '\n';
+			node = node->next;
+		}
+		std::cout << std::endl;
 	};
 
 private:
