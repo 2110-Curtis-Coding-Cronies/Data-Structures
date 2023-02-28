@@ -41,19 +41,19 @@ public:
 	};
 
 	// Returns the pointer to the head node.
-	SingleNode<T>* getHead(void) const
+	inline SingleNode<T>* getHead(void) const
 	{
 		return m_head;
 	};
 
 	// Returns the pointer to the tail node.
-	SingleNode<T>* getTail(void) const
+	inline SingleNode<T>* getTail(void) const
 	{
 		return m_tail;
 	};
 
 	// Returns the first node which matches the given value.
-	SingleNode<T>* search(T val) const
+	inline SingleNode<T>* search(T val) const
 	{
 		for (SingleNode<T>* next = m_head; next != nullptr; next = next->next) {
 			if (next->value == val)
@@ -76,7 +76,7 @@ public:
 	};
 
 	// Inserts a new node with the given value before the head node.
-	void prepend(T val)
+	inline void prepend(T val)
 	{
 		if (m_head == nullptr) {
 			m_head = new SingleNode<T>(val);
@@ -88,7 +88,7 @@ public:
 	};
 
 	// Inserts the value after the specified node.
-	void insertAfter(SingleNode<T>* node, T val)
+	inline void insertAfter(SingleNode<T>* node, T val)
 	{
 		// Scenario 1: the list is empty.
 		if (m_head == nullptr) {
@@ -110,7 +110,7 @@ public:
 	};
 
 	// Removes the node after the specified node.
-	void removeAfter(SingleNode<T>* node)
+	inline void removeAfter(SingleNode<T>* node)
 	{
 		// No node can be removed if the list is empty, so if the pointer to the head is null, don't do anything.
 		if (m_head == nullptr) return;
@@ -130,7 +130,7 @@ public:
 		}
 	};
 
-	void printEach(void)
+	inline void printEach(void)
 	{
 		size_t counter = 0;
 		SingleNode<T>* node = m_head;
