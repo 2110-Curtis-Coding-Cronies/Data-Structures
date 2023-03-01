@@ -5,7 +5,7 @@
 * 
 * This class represents the abstract data type List.
 * Template T is the data type which this list holds.
-* Template P is a pointer type which is used for nodes or offsets, depending on the implementation.
+* Template P is a pointer type which is used for nodes or for pointer offsets, depending on the implementation.
 */
 
 template <class T, class P>
