@@ -7,6 +7,9 @@
 
 #include <stddef.h>
 
+// Hashes val, producing an index that is less than n, and returns it.
+size_t hashModulo(size_t n, int val);
+
 // Inserts val into table, which is of size n.
 // Returns 1 if the value was inserted, 0 otherwise.
 int insert(int *table, size_t n, int val);
