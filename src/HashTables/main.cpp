@@ -1,5 +1,5 @@
 #include <iostream>
-#include "HashTable.hpp"
+#include "HashTableChaining.hpp"
 
 // Entrypoint for hash-table classes.
 // Written by Grayson Kippes on 4/13/2023.

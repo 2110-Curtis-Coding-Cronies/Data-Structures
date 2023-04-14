@@ -1,4 +1,4 @@
-#include "HashTable.hpp"
+#include "HashTableChaining.hpp"
 #include <iostream>
 
 HashTableChaining::HashTableChaining(SizeInt size) : m_table(size) {}
