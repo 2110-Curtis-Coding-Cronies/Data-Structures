@@ -1,0 +1,10 @@
+Hash Tables
+
+Collision Strategies
+    Chaining - each bucket contains a list; when a collision occurs, just append the item to the list.
+    Linear Probing - when a collision occurs at bucket M, try to put the item in M + 1, and so on until an empty space is found.
+    Quadratic Probing - when a collision occurs at bucket M, probe (M + c_1 * i + c_2 * i^2) % table size, where i is the probe steps, and c_1 and c_2 are programmer defined constants.
+
+Hashing Functions
+    Modulo Hashing - the module of the integer value of the item with the table size is taken, and used as the index.
+    Mid-square Base 10 Hashing - squares the integer value and takes the middle digits to form the index.
