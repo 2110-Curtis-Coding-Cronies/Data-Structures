@@ -40,5 +40,6 @@ private:
     // Uses the modulo hash function.
     SizeInt hashModulo(int x) const;
 
+    // The internal table object.
     std::vector<std::list<int>> m_table;
 };
