@@ -1,7 +1,7 @@
 CC = g++
 CFLAGS = -I/src
 target = HashTables
-objects = src/main.o
+objects = src/HashTables/main.o src/HashTables/HashTable.o
 
 # build executable
 HashTableMake: $(objects)
