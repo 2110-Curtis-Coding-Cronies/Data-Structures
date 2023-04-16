@@ -21,6 +21,12 @@ public:
 
     inline BucketState getState(void) const { return m_state; };
 
+    // Returns this true if this bucket is empty (empty state does not matter), false otherwise.
+    bool isEmpty(void) const { return m_state == BucketState::EMPTY_SINCE_START || m_state == BucketState::EMPTY_SINCE_REMOVAL; };
+
+    // Returns true if this bucket has a value.
+    bool hasValue(void) const { return m_state == BucketState::FULL; };
+
     inline int operator*(void) const { return m_value; };
 
     inline int getValue(void) const { return m_value; };

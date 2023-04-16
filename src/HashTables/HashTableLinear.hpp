@@ -13,7 +13,26 @@ public:
 
     // Constructs a hash table with a specified size.
     HashTableLinear(SizeInt size);
+
+    // Inserts the specified item into this table.
+    // Returns true if the specified item was successfully inserted, false otherwise.
+    bool insert(int x);
+
+    // Searches for the specified item in this table.
+    // Returns true if the specified item was found in this table, false otherwise.
+    bool search(int x) const;
+
+    // Removes the specified item from this table.
+    // Returns true if the specified item was found in and successfully removed from this table, false otherwise.
+    bool remove(int x);
+
+    // Outputs the contents of this table.
+    void output(void) const;
 private:
+    // Hashes the passed item and returns the bucket index.
+    // Uses the modulo hash function.
+    SizeInt hashModulo(int x) const;
+
     // The internal table object.
     // nullptr = empty object.
     std::vector<HashTableBucket> m_table;
