@@ -1,11 +1,11 @@
 #include "HashTableLinear.hpp"
 #include <iostream>
 
-HashTableLinear::HashTableLinear(SizeInt size) : m_table(size) {}
+HashTableLinear::HashTableLinear(std::size_t size) : m_table(size) {}
 
 bool HashTableLinear::insert(int x)
 {
-    SizeInt location = probe(x, false);
+    std::size_t location = probe(x, false);
     if (location < m_table.size()) {
         m_table.at(location).set(x);
         return true;
@@ -20,7 +20,7 @@ bool HashTableLinear::search(int x) const
 
 bool HashTableLinear::remove(int x)
 {
-    SizeInt location = probe(x, true);
+    std::size_t location = probe(x, true);
     if (location < m_table.size()) {
         m_table[location].empty();
         return true;
@@ -28,11 +28,11 @@ bool HashTableLinear::remove(int x)
     return false;
 }
 
-SizeInt HashTableLinear::probe(int x, bool searching) const
+std::size_t HashTableLinear::probe(int x, bool searching) const
 {
-    SizeInt initialHash = hashModulo(x);
-    for (SizeInt i = 0; i < m_table.size(); i++) {
-        SizeInt currentIndex = (i + initialHash) % m_table.size();
+    std::size_t initialHash = hashModulo(x);
+    for (std::size_t i = 0; i < m_table.size(); i++) {
+        std::size_t currentIndex = (i + initialHash) % m_table.size();
         const HashTableBucket &bucket = m_table.at(currentIndex);
 
         // If searching for a value, probe until it is found or until an empty-since-start bucket is found.
@@ -51,7 +51,7 @@ SizeInt HashTableLinear::probe(int x, bool searching) const
 
 void HashTableLinear::output(void) const
 {
-    for (SizeInt i = 0; i < m_table.size(); i++) {
+    for (std::size_t i = 0; i < m_table.size(); i++) {
         std::cout << i << ": ";
         if (m_table.at(i).hasValue())
             std::cout << *m_table.at(i) << '\n';
@@ -61,7 +61,7 @@ void HashTableLinear::output(void) const
     std::cout << std::endl;
 }
 
-SizeInt HashTableLinear::hashModulo(int x) const
+std::size_t HashTableLinear::hashModulo(int x) const
 {
     return x % m_table.size();
 }

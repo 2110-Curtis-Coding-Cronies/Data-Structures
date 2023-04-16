@@ -6,9 +6,6 @@
 #include <vector>
 #include <list>
 
-// Used as a stand-in for std::size_t, since <cstddef> cannot be included in the test.
-typedef unsigned long long int SizeInt;
-
 // Hash table that implements chaining as its collision strategy.
 // Written by Grayson Kippes on 4/13/2023.
 class HashTableChaining
@@ -18,7 +15,7 @@ public:
     HashTableChaining(void) = delete;
 
     // Constructs a hash table with a specified size.
-    HashTableChaining(SizeInt size);
+    HashTableChaining(std::size_t size);
 
     // Inserts the specified item into this table.
     // Returns true if the specified item was successfully inserted, false otherwise.
@@ -38,7 +35,7 @@ public:
 private:
     // Hashes the passed item and returns the bucket index.
     // Uses the modulo hash function.
-    SizeInt hashModulo(int x) const;
+    std::size_t hashModulo(int x) const;
 
     // The internal table object.
     std::vector<std::list<int>> m_table;

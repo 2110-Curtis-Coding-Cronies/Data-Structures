@@ -12,7 +12,7 @@ public:
     HashTableLinear(void) = delete;
 
     // Constructs a hash table with a specified size.
-    HashTableLinear(SizeInt size);
+    HashTableLinear(std::size_t size);
 
     // Inserts the specified item into this table.
     // Returns true if the specified item was successfully inserted, false otherwise.
@@ -31,7 +31,7 @@ public:
 private:
     // Probe this table for an address based on the value provided.
     // If parameter searching is true, stop only on empty-since-start; otherwise, stop on any empty bucket.
-    SizeInt probe(int x, bool searching = false) const;
+    std::size_t probe(int x, bool searching = false) const;
 
     // Hashes the passed item and returns the bucket index.
     // Uses the modulo hash function.

@@ -1,7 +1,7 @@
 #include "HashTableChaining.hpp"
 #include <iostream>
 
-HashTableChaining::HashTableChaining(SizeInt size) : m_table(size) {}
+HashTableChaining::HashTableChaining(std::size_t size) : m_table(size) {}
 
 bool HashTableChaining::insert(int x)
 {
@@ -33,7 +33,7 @@ bool HashTableChaining::remove(int x)
 
 void HashTableChaining::output(void) const
 {
-    for (SizeInt i = 0; i < m_table.size(); i++) {
+    for (std::size_t i = 0; i < m_table.size(); i++) {
         // Print the index of this bucket.
         std::cout << i << ": ";
 
@@ -50,7 +50,7 @@ void HashTableChaining::output(void) const
     std::cout << std::endl;
 }
 
-SizeInt HashTableChaining::hashModulo(int x) const
+std::size_t HashTableChaining::hashModulo(int x) const
 {
     return x % m_table.size();
 }
