@@ -1,5 +1,6 @@
 #include <iostream>
 #include "HashTableLinear.hpp"
+#include "HashTableQuadratic.hpp"
 
 // Entrypoint for hash-table classes.
 // Written by Grayson Kippes on 4/13/2023.
@@ -7,7 +8,7 @@
 int main(void)
 {
     // Unit testing for HashTableLinear.
-    HashTableLinear table2(10);
+    HashTableQuadratic table2(10);
 
     table2.output();
 
@@ -15,6 +16,7 @@ int main(void)
     table2.insert(134);
     table2.insert(24);
     table2.insert(3874);
+    table2.insert(644);
 
     table2.output();
 
