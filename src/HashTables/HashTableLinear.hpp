@@ -29,6 +29,10 @@ public:
     // Outputs the contents of this table.
     void output(void) const;
 private:
+    // Probe this table for an address based on the value provided.
+    // If parameter searching is true, stop only on empty-since-start; otherwise, stop on any empty bucket.
+    SizeInt probe(int x, bool searching = false) const;
+
     // Hashes the passed item and returns the bucket index.
     // Uses the modulo hash function.
     SizeInt hashModulo(int x) const;
