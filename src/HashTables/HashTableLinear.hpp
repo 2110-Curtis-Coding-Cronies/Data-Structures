@@ -35,7 +35,7 @@ private:
 
     // Hashes the passed item and returns the bucket index.
     // Uses the modulo hash function.
-    SizeInt hashModulo(int x) const;
+    std::size_t hashModulo(int x) const;
 
     // The internal table object.
     // nullptr = empty object.

@@ -1,8 +1,5 @@
 #pragma once
 
-// Used as a stand-in for std::size_t, since <cstddef> cannot be included in the test.
-typedef unsigned long long int SizeInt;
-
 enum class BucketState
 {
     EMPTY_SINCE_START,
