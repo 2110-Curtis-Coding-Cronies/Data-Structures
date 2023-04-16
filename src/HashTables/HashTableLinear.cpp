@@ -20,17 +20,10 @@ bool HashTableLinear::search(int x) const
 
 bool HashTableLinear::remove(int x)
 {
-    SizeInt initialHash = hashModulo(x);
-    for (SizeInt i = 0; i < m_table.size(); i++) {
-        SizeInt currentIndex = (i + initialHash) % m_table.size();
-        HashTableBucket &bucket = m_table.at(currentIndex);
-        if (bucket.getState() == BucketState::EMPTY_SINCE_START) {
-            return false;
-        }
-        else if (bucket.hasValue() && bucket.getValue() == x) {
-            bucket.empty();
-            return true;
-        }
+    SizeInt location = probe(x, true);
+    if (location < m_table.size()) {
+        m_table[location].empty();
+        return true;
     }
     return false;
 }
