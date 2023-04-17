@@ -30,7 +30,7 @@ bool HashTableLinear::remove(int x)
 
 std::size_t HashTableLinear::probe(int x, bool searching) const
 {
-    std::size_t initialHash = hashModulo(x);
+    std::size_t initialHash = hashMidsquare(x);
     for (std::size_t i = 0; i < m_table.size(); i++) {
         std::size_t currentIndex = (i + initialHash) % m_table.size();
         const HashTableBucket &bucket = m_table.at(currentIndex);
@@ -68,13 +68,18 @@ std::size_t HashTableLinear::hashModulo(int x) const
 
 std::size_t HashTableLinear::hashMidsquare(int x) const
 {
-    // Find the number of digits in the value to be hashed.
+    int sq = x * x;
+    
+    // Find the number of digits in the square of the value to be hashed.
     std::size_t numDigits = 1;
-    int y = x;
+    int y = sq;
     while (y >= 10) {
         y /= 10;
         numDigits++;
     }
+
+    std::cout << "hashing mid-square: x = " << x << ", x^2 = " << sq << std::endl;
+    std::cout << "numDigits = " << numDigits << std::endl;
 
     // Find the number of digits in the table size.
     std::size_t numDigitsTableSize = 1;
@@ -84,24 +89,33 @@ std::size_t HashTableLinear::hashMidsquare(int x) const
         numDigitsTableSize++;
     }
 
+    std::cout << "numDigitsTableSize = " << numDigitsTableSize << std::endl;
+
     // Calculate the first digit to extract (from left to right), and the number of digits to extract.
     std::size_t startDigit = (numDigits / 2) - (numDigitsTableSize / 2);
-    std::size_t numDigitsToExtract = numDigitsTableSize - 1;
-    int extractedDigits = x;
+    int extractedDigits = sq;
     for (std::size_t i = 0; i < startDigit; i++) {
         extractedDigits /= 10;
     }
 
+    std::cout << "startDigit = " << startDigit << std::endl;
+    std::cout << "before lop off: extractedDigits = " << extractedDigits << std::endl;
+
     // Find the digits before the extracted digits to subract.
     int lopOff = extractedDigits;
     int power = 1;
-    for (std::size_t i = 0; i < numDigitsToExtract; i++) {
+    for (std::size_t i = 0; i < numDigitsTableSize; i++) {
         lopOff /= 10;
         power *= 10;
     }
     lopOff *= power;
 
+    std::cout << "lopOff = " << lopOff << std::endl;
+
     // Lop off the extra digits before the extracted digits.
     extractedDigits -= lopOff;
+    std::cout << "after lop off: extractedDigits = " << extractedDigits << std::endl;
+    extractedDigits %= m_table.size();
+    std::cout << "after modulo: extractedDigits = " << extractedDigits << "\n\n" << std::flush;
     return extractedDigits;
 }

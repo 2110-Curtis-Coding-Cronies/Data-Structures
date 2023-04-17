@@ -8,14 +8,14 @@
 int main(void)
 {
     // Unit testing for HashTableLinear.
-    HashTableQuadratic table2(10);
+    HashTableLinear table2(17);
 
     table2.output();
 
     table2.insert(11);
     table2.insert(134);
     table2.insert(24);
-    table2.insert(3874);
+    table2.insert(13875);
     table2.insert(644);
 
     table2.output();
