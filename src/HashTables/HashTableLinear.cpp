@@ -68,6 +68,7 @@ std::size_t HashTableLinear::hashModulo(int x) const
 
 std::size_t HashTableLinear::hashMidsquare(int x) const
 {
+    // The square of the value to be hashed.
     int sq = x * x;
     
     // Find the number of digits in the square of the value to be hashed.
@@ -78,10 +79,8 @@ std::size_t HashTableLinear::hashMidsquare(int x) const
         numDigits++;
     }
 
-    std::cout << "hashing mid-square: x = " << x << ", x^2 = " << sq << std::endl;
-    std::cout << "numDigits = " << numDigits << std::endl;
-
     // Find the number of digits in the table size.
+    // This will be the number of digits to extract from the square of the value to be hashed.
     std::size_t numDigitsTableSize = 1;
     std::size_t tableSize = m_table.size();
     while (tableSize >= 10) {
@@ -89,19 +88,14 @@ std::size_t HashTableLinear::hashMidsquare(int x) const
         numDigitsTableSize++;
     }
 
-    std::cout << "numDigitsTableSize = " << numDigitsTableSize << std::endl;
-
-    // Calculate the first digit to extract (from left to right), and the number of digits to extract.
+    // Calculate the first digit to extract (from left to right).
     std::size_t startDigit = (numDigits / 2) - (numDigitsTableSize / 2);
     int extractedDigits = sq;
     for (std::size_t i = 0; i < startDigit; i++) {
         extractedDigits /= 10;
     }
 
-    std::cout << "startDigit = " << startDigit << std::endl;
-    std::cout << "before lop off: extractedDigits = " << extractedDigits << std::endl;
-
-    // Find the digits before the extracted digits to subract.
+    // Find the digits before the extracted digits to subtract, aka the larger digits.
     int lopOff = extractedDigits;
     int power = 1;
     for (std::size_t i = 0; i < numDigitsTableSize; i++) {
@@ -110,12 +104,6 @@ std::size_t HashTableLinear::hashMidsquare(int x) const
     }
     lopOff *= power;
 
-    std::cout << "lopOff = " << lopOff << std::endl;
-
-    // Lop off the extra digits before the extracted digits.
-    extractedDigits -= lopOff;
-    std::cout << "after lop off: extractedDigits = " << extractedDigits << std::endl;
-    extractedDigits %= m_table.size();
-    std::cout << "after modulo: extractedDigits = " << extractedDigits << "\n\n" << std::flush;
-    return extractedDigits;
+    // Lop off the extra digits before the extracted digits, and modulo the extracted digits with the table size.
+    return (extractedDigits - lopOff) % m_table.size();
 }
