@@ -65,3 +65,43 @@ std::size_t HashTableLinear::hashModulo(int x) const
 {
     return x % m_table.size();
 }
+
+std::size_t HashTableLinear::hashMidsquare(int x) const
+{
+    // Find the number of digits in the value to be hashed.
+    std::size_t numDigits = 1;
+    int y = x;
+    while (y >= 10) {
+        y /= 10;
+        numDigits++;
+    }
+
+    // Find the number of digits in the table size.
+    std::size_t numDigitsTableSize = 1;
+    std::size_t tableSize = m_table.size();
+    while (tableSize >= 10) {
+        tableSize /= 10;
+        numDigitsTableSize++;
+    }
+
+    // Calculate the first digit to extract (from left to right), and the number of digits to extract.
+    std::size_t startDigit = (numDigits / 2) - (numDigitsTableSize / 2);
+    std::size_t numDigitsToExtract = numDigitsTableSize - 1;
+    int extractedDigits = x;
+    for (std::size_t i = 0; i < startDigit; i++) {
+        extractedDigits /= 10;
+    }
+
+    // Find the digits before the extracted digits to subract.
+    int lopOff = extractedDigits;
+    int power = 1;
+    for (std::size_t i = 0; i < numDigitsToExtract; i++) {
+        lopOff /= 10;
+        power *= 10;
+    }
+    lopOff *= power;
+
+    // Lop off the extra digits before the extracted digits.
+    extractedDigits -= lopOff;
+    return extractedDigits;
+}

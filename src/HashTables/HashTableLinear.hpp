@@ -37,6 +37,8 @@ private:
     // Uses the modulo hash function.
     std::size_t hashModulo(int x) const;
 
+    std::size_t hashMidsquare(int x) const;
+
     // The internal table object.
     // nullptr = empty object.
     std::vector<HashTableBucket> m_table;
